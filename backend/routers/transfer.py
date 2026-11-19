@@ -485,9 +485,3 @@ def update_transfer(transfer_id: int, transfer: TransferCreate, user: dict = Dep
             raise HTTPException(status_code=400, detail="Invalid value: To_Project_ID must differ from From_Project_ID, and Effective_Transfer_Date must be on or after Request_Date")
 
 
-@router.delete("/{transfer_id}", status_code=204)
-def delete_transfer(transfer_id: int, user: dict = Depends(require_roles("fleet_manager"))):
-    with get_connection() as connection, connection.cursor() as cursor:
-        cursor.execute('DELETE FROM "TRANSFER" WHERE "Transfer_ID" = %s;', (transfer_id,))
-        if cursor.rowcount == 0:
-            raise HTTPException(status_code=404, detail="Transfer not found")

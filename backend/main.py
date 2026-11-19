@@ -38,10 +38,3 @@ def root():
     return {"message": "Equipment Management System API is running"}
 
 
-@app.get("/db-test")
-def database_test():
-    with get_connection() as connection:
-        with connection.cursor() as cursor:
-            cursor.execute("SELECT current_database();")
-            database_name = cursor.fetchone()[0]
-    return {"message": "Database connection successful", "database": database_name}
